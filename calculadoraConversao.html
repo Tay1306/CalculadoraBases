@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de bases</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #594563;
+            font-family: Avantgarde, sans-serif;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .calculadora-container {
+            min-width: 500px;
+            width: auto;
+            background-color: #e9ecbe;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-spacing: 8px;
+        }
+
+        .visor {
+            height: 90px;
+            border-radius: 20px;
+            background-color: rgb(169, 126, 209);
+            color: white;
+            font-size: 2.5rem;
+            text-align: right;
+            padding-right: 20px;
+            word-break: break-all;
+        }
+
+        .bases {
+            background-color: rgb(127, 66, 184);
+            color: white;
+            border-radius: 12px;
+            height: 50px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .numeros td {
+            height: 60px;
+            background-color: #b87cd6;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+
+        h1 {
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: #8a4ba8;
+            color: rgb(255, 255, 255);
+            font-size: 3rem;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 480px) {
+            .visor {
+                font-size: 1.8rem;
+                height: 70px;
+            }
+
+            .bases {
+                font-size: 0.7rem;
+                height: 40px;
+            }
+
+            .numeros td {
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            table {
+                border-spacing: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Calculadora de bases</h1>
+    <div class="calculadora-container">
+
+        <table>
+            <tr>
+                <td id="visor" class="visor" colspan="4">0</td>
+            </tr>
+            <tr class="bases">
+                <td id="bin">BIN: 0</td>
+                <td id="dec">DEC: 0</td>
+                <td id="oct">OCT: 0</td>
+                <td id="hex">HEX: 0</td>
+            </tr>
+            <tr class="numeros">
+                <td onclick="inserir('1')">1</td>
+                <td onclick="inserir('2')">2</td>
+                <td onclick="inserir('3')">3</td>
+                <td onclick="calcular()" style="background-color: #81c784;">=</td>
+            </tr>
+            <tr class="numeros">
+                <td onclick="inserir('4')">4</td>
+                <td onclick="inserir('5')">5</td>
+                <td onclick="inserir('6')">6</td>
+                <td onclick="inserir('0')">0</td>
+            </tr>
+            <tr class="numeros">
+                <td onclick="inserir('7')">7</td>
+                <td onclick="inserir('8')">8</td>
+                <td onclick="inserir('9')">9</td>
+                <td onclick="limpar()" style="background-color: #e57373;">C</td>
+            </tr>
+
+
+        </table>
+    </div>
+
+    <script>
+        const visor = document.getElementById('visor');
+        const bin = document.getElementById('bin');
+        const dec = document.getElementById('dec');
+        const oct = document.getElementById('oct');
+        const hex = document.getElementById('hex');
+
+        let valorAtual = '0';
+
+        function atualizarDisplays() {
+            visor.textContent = valorAtual;
+
+            const numeroDecimal = parseInt(valorAtual, 10);
+
+            if (isNaN(numeroDecimal) || valorAtual === '') {
+                bin.textContent = 'BIN: 0';
+                dec.textContent = 'DEC: 0';
+                oct.textContent = 'OCT: 0';
+                hex.textContent = 'HEX: 0';
+            } else {
+                bin.textContent = 'BIN: ' + numeroDecimal.toString(2);
+                dec.textContent = 'DEC: ' + numeroDecimal.toString(10);
+                oct.textContent = 'OCT: ' + numeroDecimal.toString(8);
+                hex.textContent = 'HEX: ' + numeroDecimal.toString(16).toUpperCase();
+            }
+        }
+
+        function inserir(novo) {
+            if (valorAtual === '0') {
+                valorAtual = novo;
+            } else {
+                valorAtual += novo;
+            }
+            atualizarDisplays();
+        }
+
+        function limpar() {
+            valorAtual = '0';
+            atualizarDisplays();
+        }
+
+        function calcular() {
+            atualizarDisplays();
+        }
+    </script>
+</body>
+
+</html>
